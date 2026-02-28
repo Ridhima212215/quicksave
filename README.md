@@ -7,7 +7,7 @@
 
 **QuickSave** is a lighting-fast Progressive Web App (PWA) built specifically for saving interesting links directly from your mobile device. Whether it's a GitHub repository, an arXiv paper, or a thought-provoking Twitter/X thread, QuickSave gives you a single, beautiful place to store them offline.
 
-### 🌐 [Click here to try the Live Demo!](https://quicksave-blond.vercel.app/) 
+### 🌐 [Click here to try the Live Demo!](https://dancing-heliotrope-331dc3.netlify.app/) 
 
 > **🔒 Privacy Note:** This app runs 100% locally on your device. Searching, saving, and filtering all happen securely inside your browser using IndexedDB. **No one else can see your saved links**, even if they click the exact same public link above!
 
