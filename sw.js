@@ -3,7 +3,7 @@
 // Handles offline caching and share target
 // ============================================
 
-const CACHE_NAME = 'quicksave-v1';
+const CACHE_NAME = 'quicksave-v2';
 const ASSETS_TO_CACHE = [
     './index.html',
     './index.css',
