@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#6c63ff">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="description" content="Save interesting links from Twitter/X — research papers, GitHub repos, articles & more">
+
+  <title>QuickSave — Save What Inspires You</title>
+
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="manifest.json">
+
+  <!-- Favicon (emoji-based inline SVG) -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+  <!-- ====== App Shell ====== -->
+  <div class="app" id="app">
+
+    <!-- Header -->
+    <header class="header">
+      <h1 class="header__title">
+        <span>⚡</span> QuickSave
+      </h1>
+    </header>
+
+    <!-- ====== View 1: SAVE ====== -->
+    <main class="view active" id="view-save" role="main">
+      <h2 class="view__title">Save a Link</h2>
+
+      <form id="save-form" autocomplete="off">
+        <!-- URL Input -->
+        <div class="form-group">
+          <label class="form-label" for="input-url">Link / URL</label>
+          <input
+            class="form-input"
+            id="input-url"
+            type="url"
+            placeholder="Paste a link here..."
+            required
+          >
+          <div id="detected-type"></div>
+        </div>
+
+        <!-- Title Input -->
+        <div class="form-group">
+          <label class="form-label" for="input-title">Title</label>
+          <input
+            class="form-input"
+            id="input-title"
+            type="text"
+            placeholder="What is this about?"
+          >
+        </div>
+
+        <!-- Note -->
+        <div class="form-group">
+          <label class="form-label" for="input-note">Your Notes</label>
+          <textarea
+            class="form-textarea"
+            id="input-note"
+            placeholder="Why is this interesting? Any key takeaways?"
+          ></textarea>
+        </div>
+
+        <!-- Tags -->
+        <div class="form-group">
+          <label class="form-label">Tags</label>
+          <div class="tag-selector" id="tag-selector">
+            <button type="button" class="tag-chip" data-tag="paper">📄 Paper</button>
+            <button type="button" class="tag-chip" data-tag="github">💻 GitHub</button>
+            <button type="button" class="tag-chip" data-tag="tweet">🐦 Tweet</button>
+            <button type="button" class="tag-chip" data-tag="article">📰 Article</button>
+            <button type="button" class="tag-chip" data-tag="video">🎥 Video</button>
+            <button type="button" class="tag-chip" data-tag="other">🔖 Other</button>
+          </div>
+        </div>
+
+        <!-- Save Button -->
+        <button type="submit" class="btn-primary" id="btn-save">
+          <span>💾</span> Save It
+        </button>
+      </form>
+    </main>
+
+    <!-- ====== View 2: BROWSE ====== -->
+    <section class="view" id="view-browse">
+      <h2 class="view__title">Your Saves</h2>
+
+      <!-- Search -->
+      <div class="search-bar">
+        <span class="search-bar__icon">🔍</span>
+        <input
+          class="search-bar__input"
+          id="search-input"
+          type="text"
+          placeholder="Search your saves..."
+        >
+      </div>
+
+      <!-- Filters -->
+      <div class="filter-bar" id="filter-bar">
+        <button class="filter-chip active" data-filter="all">All</button>
+        <button class="filter-chip" data-filter="paper">📄 Papers</button>
+        <button class="filter-chip" data-filter="github">💻 GitHub</button>
+        <button class="filter-chip" data-filter="tweet">🐦 Tweets</button>
+        <button class="filter-chip" data-filter="article">📰 Articles</button>
+        <button class="filter-chip" data-filter="video">🎥 Videos</button>
+        <button class="filter-chip" data-filter="other">🔖 Other</button>
+      </div>
+
+      <!-- Saved Items List -->
+      <div class="card-list" id="card-list">
+        <!-- Cards rendered by JS -->
+      </div>
+
+      <!-- Empty State -->
+      <div class="empty-state" id="empty-state" style="display:none;">
+        <div class="empty-state__icon">📭</div>
+        <div class="empty-state__title">Nothing saved yet</div>
+        <div class="empty-state__text">Go save something interesting from Twitter/X! Tap the ⚡ Save tab below.</div>
+      </div>
+    </section>
+
+    <!-- ====== View 3: DASHBOARD ====== -->
+    <section class="view" id="view-dashboard">
+      <h2 class="view__title">Dashboard</h2>
+
+      <div class="stats-grid" id="stats-grid">
+        <div class="stat-card">
+          <div class="stat-card__icon">📦</div>
+          <div class="stat-card__number" id="stat-total">0</div>
+          <div class="stat-card__label">Total Saves</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__icon">📄</div>
+          <div class="stat-card__number" id="stat-papers">0</div>
+          <div class="stat-card__label">Papers</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__icon">💻</div>
+          <div class="stat-card__number" id="stat-github">0</div>
+          <div class="stat-card__label">GitHub</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__icon">🐦</div>
+          <div class="stat-card__number" id="stat-tweets">0</div>
+          <div class="stat-card__label">Tweets</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__icon">📰</div>
+          <div class="stat-card__number" id="stat-articles">0</div>
+          <div class="stat-card__label">Articles</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__icon">🎥</div>
+          <div class="stat-card__number" id="stat-videos">0</div>
+          <div class="stat-card__label">Videos</div>
+        </div>
+      </div>
+
+      <h3 class="section-title">🕐 Recent Saves</h3>
+      <div class="card-list" id="recent-list">
+        <!-- Recent cards rendered by JS -->
+      </div>
+      <div class="empty-state" id="dashboard-empty" style="display:none;">
+        <div class="empty-state__icon">🚀</div>
+        <div class="empty-state__title">Start saving!</div>
+        <div class="empty-state__text">Your dashboard will light up once you start collecting interesting finds.</div>
+      </div>
+    </section>
+
+  </div><!-- /app -->
+
+  <!-- ====== Bottom Navigation ====== -->
+  <nav class="bottom-nav" aria-label="Main navigation">
+    <div class="bottom-nav__inner">
+      <button class="nav-btn active" data-view="view-save" id="nav-save">
+        <span class="nav-btn__icon">⚡</span>
+        <span class="nav-btn__label">Save</span>
+      </button>
+      <button class="nav-btn" data-view="view-browse" id="nav-browse">
+        <span class="nav-btn__icon">📂</span>
+        <span class="nav-btn__label">Browse</span>
+      </button>
+      <button class="nav-btn" data-view="view-dashboard" id="nav-dashboard">
+        <span class="nav-btn__icon">📊</span>
+        <span class="nav-btn__label">Dashboard</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ====== Save Success Animation ====== -->
+  <div class="save-success" id="save-success">
+    <div class="save-success__icon">✅</div>
+    <div class="save-success__text">Saved!</div>
+  </div>
+
+  <!-- ====== Delete Confirmation Modal ====== -->
+  <div class="modal-overlay" id="modal-delete">
+    <div class="modal">
+      <div class="modal__icon">🗑️</div>
+      <div class="modal__title">Delete this save?</div>
+      <div class="modal__text">This action cannot be undone.</div>
+      <div class="modal__actions">
+        <button class="modal__btn modal__btn--cancel" id="btn-cancel-delete">Cancel</button>
+        <button class="modal__btn modal__btn--delete" id="btn-confirm-delete">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== Toast ====== -->
+  <div class="toast" id="toast"></div>
+
+  <!-- Scripts -->
+  <script src="db.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

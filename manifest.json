@@ -1,0 +1,32 @@
+{
+  "name": "QuickSave",
+  "short_name": "QuickSave",
+  "description": "Save interesting links from Twitter/X — research papers, GitHub repos, articles & more",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0a0e1a",
+  "theme_color": "#6c63ff",
+  "icons": [
+    {
+      "src": "icons/icon-512.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "share_target": {
+    "action": "./index.html",
+    "method": "GET",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url"
+    }
+  },
+  "categories": [
+    "productivity",
+    "utilities"
+  ],
+  "lang": "en"
+}
