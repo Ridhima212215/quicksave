@@ -158,6 +158,7 @@
 
             // Show success animation
             showSaveSuccess();
+            updateStreak();
 
             // Reset form
             saveForm.reset();
@@ -169,7 +170,7 @@
             console.error('Save error:', err);
         } finally {
             btnSave.disabled = false;
-            btnSave.innerHTML = '<span>💾</span> Save It';
+            btnSave.innerHTML = '<span class="btn-primary__icon">💾</span><span>Save It</span><span class="btn-primary__shine"></span>';
         }
     });
 
@@ -465,10 +466,25 @@
         }
     }
 
+    // ---- Streak Counter ----
+    async function updateStreak() {
+        try {
+            const all = await QuickSaveDB.getAll();
+            const now = new Date();
+            const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+            const thisWeek = all.filter(item => new Date(item.createdAt) >= weekAgo);
+            const streakEl = $('#streak-count');
+            if (streakEl) streakEl.textContent = thisWeek.length;
+        } catch (err) {
+            console.error('Streak error:', err);
+        }
+    }
+
     // ---- Init ----
     function init() {
         registerSW();
         handleShareTarget();
+        updateStreak();
     }
 
     // Run on DOM ready

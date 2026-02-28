@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta name="theme-color" content="#6c63ff">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="description" content="Save interesting links from Twitter/X — research papers, GitHub repos, articles & more">
+  <meta name="description"
+    content="Save interesting links from Twitter/X — research papers, GitHub repos, articles & more">
 
   <title>QuickSave — Save What Inspires You</title>
 
@@ -14,60 +16,63 @@
   <link rel="manifest" href="manifest.json">
 
   <!-- Favicon (emoji-based inline SVG) -->
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
 
   <!-- Stylesheet -->
   <link rel="stylesheet" href="index.css">
 </head>
+
 <body>
+
+  <!-- Floating Background Orbs -->
+  <div class="orb orb--1"></div>
+  <div class="orb orb--2"></div>
+  <div class="orb orb--3"></div>
 
   <!-- ====== App Shell ====== -->
   <div class="app" id="app">
 
     <!-- Header -->
     <header class="header">
-      <h1 class="header__title">
-        <span>⚡</span> QuickSave
-      </h1>
+      <div class="header__top">
+        <h1 class="header__title">
+          <span class="header__bolt">⚡</span> QuickSave
+        </h1>
+        <div class="header__streak" id="header-streak" title="Saves this week">
+          <span class="header__streak-icon">🔥</span>
+          <span class="header__streak-count" id="streak-count">0</span>
+        </div>
+      </div>
+      <p class="header__subtitle">Capture what inspires you</p>
     </header>
 
     <!-- ====== View 1: SAVE ====== -->
     <main class="view active" id="view-save" role="main">
-      <h2 class="view__title">Save a Link</h2>
+      <div class="hero-card">
+        <div class="hero-card__icon">💡</div>
+        <div class="hero-card__text">Found something interesting? <strong>Save it below!</strong></div>
+      </div>
 
       <form id="save-form" autocomplete="off">
         <!-- URL Input -->
         <div class="form-group">
           <label class="form-label" for="input-url">Link / URL</label>
-          <input
-            class="form-input"
-            id="input-url"
-            type="url"
-            placeholder="Paste a link here..."
-            required
-          >
+          <input class="form-input" id="input-url" type="url" placeholder="Paste a link here..." required>
           <div id="detected-type"></div>
         </div>
 
         <!-- Title Input -->
         <div class="form-group">
           <label class="form-label" for="input-title">Title</label>
-          <input
-            class="form-input"
-            id="input-title"
-            type="text"
-            placeholder="What is this about?"
-          >
+          <input class="form-input" id="input-title" type="text" placeholder="What is this about?">
         </div>
 
         <!-- Note -->
         <div class="form-group">
           <label class="form-label" for="input-note">Your Notes</label>
-          <textarea
-            class="form-textarea"
-            id="input-note"
-            placeholder="Why is this interesting? Any key takeaways?"
-          ></textarea>
+          <textarea class="form-textarea" id="input-note"
+            placeholder="Why is this interesting? Any key takeaways?"></textarea>
         </div>
 
         <!-- Tags -->
@@ -85,7 +90,9 @@
 
         <!-- Save Button -->
         <button type="submit" class="btn-primary" id="btn-save">
-          <span>💾</span> Save It
+          <span class="btn-primary__icon">💾</span>
+          <span>Save It</span>
+          <span class="btn-primary__shine"></span>
         </button>
       </form>
     </main>
@@ -97,12 +104,7 @@
       <!-- Search -->
       <div class="search-bar">
         <span class="search-bar__icon">🔍</span>
-        <input
-          class="search-bar__input"
-          id="search-input"
-          type="text"
-          placeholder="Search your saves..."
-        >
+        <input class="search-bar__input" id="search-input" type="text" placeholder="Search your saves...">
       </div>
 
       <!-- Filters -->
@@ -223,4 +225,5 @@
   <script src="db.js"></script>
   <script src="app.js"></script>
 </body>
+
 </html>
