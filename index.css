@@ -939,24 +939,192 @@ button {
   color: var(--text-muted);
 }
 
-/* ---- Toast & Animations ---- */
+/* ---- Toast Notification ---- */
 .toast {
+  position: fixed;
+  bottom: calc(var(--nav-height) + 20px);
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  padding: var(--space-md) var(--space-lg);
   background: var(--text-primary);
   color: var(--text-inverse);
-  padding: 16px 24px;
   border-radius: var(--border-radius-full);
+  font-size: var(--font-size-sm);
   font-weight: 600;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--border-color);
+  z-index: 300;
+  opacity: 0;
+  transition: all var(--transition-bounce);
+  white-space: nowrap;
 }
 
+.toast.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+
+/* ---- Save Success Animation ---- */
 .save-success {
-  background: rgba(20, 24, 39, 0.9);
-  border: 4px solid var(--success);
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  width: 140px;
+  height: 140px;
+  background: rgba(20, 24, 39, 0.95);
+  backdrop-filter: blur(8px);
+  border-radius: var(--border-radius-xl);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  box-shadow: var(--shadow-lg);
+  border: var(--glass-border);
+  z-index: 200;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.save-success.show {
+  animation: successPop 1.2s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards;
+}
+
+@keyframes successPop {
+  0% {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+  }
+
+  25% {
+    transform: translate(-50%, -50%) scale(1.1);
+    opacity: 1;
+    border-color: var(--success);
+  }
+
+  40% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+    border-color: var(--success);
+  }
+
+  80% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+    border-color: var(--success);
+  }
+
+  100% {
+    transform: translate(-50%, -50%) scale(0.8);
+    opacity: 0;
+    border-color: var(--border-color);
+  }
+}
+
+.save-success__icon {
+  font-size: 3rem;
+  filter: drop-shadow(0 0 10px rgba(16, 185, 129, 0.5));
 }
 
 .save-success__text {
+  font-size: var(--font-size-md);
+  font-weight: 800;
+  color: var(--success);
+}
+
+/* ---- Delete Confirmation Modal ---- */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(11, 15, 25, 0.8);
+  backdrop-filter: blur(8px);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-lg);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition-normal);
+}
+
+.modal-overlay.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal {
+  background: rgba(20, 24, 39, 0.95);
+  border: var(--glass-border);
+  border-radius: var(--border-radius-xl);
+  padding: var(--space-xl);
+  max-width: 340px;
+  width: 100%;
+  text-align: center;
+  transform: scale(0.9);
+  transition: transform var(--transition-bounce);
+  box-shadow: var(--shadow-lg);
+}
+
+.modal-overlay.show .modal {
+  transform: scale(1);
+}
+
+.modal__icon {
+  font-size: 3rem;
+  margin-bottom: var(--space-md);
+}
+
+.modal__title {
   font-size: var(--font-size-lg);
   font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: var(--space-sm);
+}
+
+.modal__text {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+  margin-bottom: var(--space-lg);
+}
+
+.modal__actions {
+  display: flex;
+  gap: var(--space-md);
+}
+
+.modal__btn {
+  flex: 1;
+  padding: 12px;
+  border-radius: var(--border-radius-md);
+  font-size: var(--font-size-md);
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  transition: all var(--transition-fast);
+}
+
+.modal__btn--cancel {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-primary);
+  border: var(--glass-border);
+}
+
+.modal__btn--cancel:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.modal__btn--delete {
+  background: var(--danger);
+  color: white;
+  box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+}
+
+.modal__btn--delete:hover {
+  background: #dc2626;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(239, 68, 68, 0.4);
 }
 
 .empty-state__icon {
