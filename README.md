@@ -1,5 +1,4 @@
 <div align="center">
-  <img src="icons/icon-192x192.png" alt="QuickSave Logo" width="120" height="120">
   <h1>⚡ QuickSave PWA</h1>
   <p><strong>Capture what inspires you — instantly from your phone.</strong></p>
 </div>
